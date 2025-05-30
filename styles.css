@@ -23,6 +23,16 @@ body {
     background-color: #222222;
     color: #fff;
     text-align: right;
+    /* font-size: 2em;   */
+    /* align-items: center;   */
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.displayText {
+    font-size: 5em;
+    margin: 25px;
 }
 
 .buttons {
@@ -40,6 +50,8 @@ button {
     width: 25%;
     padding: 0;
     background-color: #fff;
+    /* font-size: 300%; */
+    font-size: 3em;
 }
 
 #equals {
