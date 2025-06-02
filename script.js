@@ -1,6 +1,12 @@
 let firstNum = null;
 let secondNum = null;
 let operator = null;
+let result = null;
+let subsequentNum = null;
+
+let isFirstNum = true;
+let isSecondNum = false;
+let equalsPressed = false;
 
 const display = document.querySelector(".displayText");
 const numberButtons = document.querySelectorAll(".number");
@@ -9,35 +15,55 @@ const equalsButton = document.querySelector(".equals");
 
 numberButtons.forEach((item) => {
     item.addEventListener("click", (item) => {
-        console.log(item.target.innerText);
+        if (equalsPressed) {
+            clean()
+        }
+        // console.log(item.target.innerText);
         display.innerText += item.target.innerText;
     });
 });
 
 operatorButtons.forEach((item) => {
     item.addEventListener("click", (item) => {
-        console.log(item.target.innerText);
-        if (firstNum == null) {
+        // console.log(item.target.innerText);
+        if (item.target.innerText == "AC") {
+          clean();
+        }
+        
+        else if (isFirstNum) {
             firstNum = display.innerText;
             display.innerText = "";
             operator = item.target.innerText;
+            isSecondNum = true;
         }
-        // else {
-        //     secondNum = display.innerText;
-        //     display.innerText = operate(operator, firstNum. secondNum);
-        // }
+        else if (isSecondNum) {
+            display.innerText = "";
+            operator = item.target.innerText;
+            equalsPressed = false;
+            subsequentNum = null;
+        }
+    
 
     });
 });
 
 equalsButton.addEventListener("click", (item) => {
-    secondNum = display.innerText;
-    // console.log(secondNum + " " + firstNum);
-    // console.log(firstNum+secondNum);
-    // operate(operator, firstNum. secondNum);
-    display.innerText = operate(operator, firstNum, secondNum);
-    // console.log(operate(operator, firstNum. secondNum));
-    // display.innerText = operate(operator, firstNum. secondNum);
+    equalsPressed = true;
+    if (isFirstNum && isSecondNum) {
+        secondNum = display.innerText;
+        result = operate(operator, firstNum, secondNum);
+        display.innerText = result;
+        isFirstNum = false;
+        
+    }
+
+    else if (isSecondNum && !isFirstNum) {
+        subsequentNum = display.innerText;
+        result = operate(operator, result, subsequentNum);
+        display.innerText = result;
+        
+    }
+    // console.log("Result = " + result);
 });
 
 function add(a, b) {
@@ -45,18 +71,18 @@ function add(a, b) {
 }
 
 function subtract(a,b) {
-    return a-b.toString();
+    return (a-b).toString();
 }
 
 function multiply(a,b) {
-    return a*b.toString();
+    return (a*b).toString();
 }
 
 function divide(a,b) {
     if (b == 0) {
-        return null;
+        return "Divide by 0??";
     }
-    return a/b.toString();
+    return (a/b).toString();
 }
 
 function operate(op, num1, num2) {
@@ -66,19 +92,24 @@ function operate(op, num1, num2) {
         case "+":
             return add(firstNumber, secondNumber);
         case "-":
-            console.log("subtract")
             return subtract(firstNumber, secondNumber);
 
         case "*":
-            console.log("Multiply");
             return multiply(firstNumber, secondNumber);
 
         case "/":
-            console.log("Divide");
             return divide(firstNumber, secondNumber);
-        case "AC":
-            firstNum = null;
-            secondNum = null;
-            display.innerText = "";
     }
+}
+
+function clean() {
+    firstNum = null;
+    secondNum = null;
+    subsequentNum = null;
+    result = null;
+    isFirstNum = true;
+    isSecondNum = false;
+    equalsPressed = false;
+    display.innerText = "";
+    // console.log("Clean Called");
 }

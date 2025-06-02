@@ -54,7 +54,7 @@ button {
     font-size: 3em;
 }
 
-#equals {
+.equals {
     height: 80%;
     background-color: #ff7033;
 }
